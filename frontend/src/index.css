@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* @plugin "daisyui" {
+    themes: winter --default, dracula --prefersdracula;
+}
+
+input::placeholder {
+    color: #999;
+} */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* body {
+    font-family: 'Noto Nastaliq Urdu', serif;
+    direction: rtl;
+} */
