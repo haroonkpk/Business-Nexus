@@ -16,38 +16,40 @@ export default function Navbar() {
 
   const toggleMenu = () => setMenuOpen((v) => !v);
 
-
   return (
-    <header className="fixed top-0 w-full z-50 backdrop-blur bg-white/30 ">
+    <header className="fixed top-0 w-full z-50 bg-[#0f172a]/70 backdrop-blur border-b border-white/10">
       <nav className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-4 flex items-center justify-between">
-        <Link
-          to="/"
-          className="text-xl sm:text-3xl font-extrabold text-yellow-400 hover:text-indigo-500 transition"
-        >
-          Business Nexus
+        <Link to="/" className="flex items-center gap-3">
+          <motion.div
+            initial={{ rotate: -10 }}
+            animate={{ rotate: 0 }}
+            transition={{ type: "spring", stiffness: 200 }}
+            className="bg-gradient-to-br from-pink-400 to-indigo-500 text-white rounded-full px-3 py-1 text-sm font-bold shadow-md"
+          >
+            Nexus
+          </motion.div>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-wide">
+            Connect & Fund
+          </h1>
         </Link>
 
         {/* Desktop Nav */}
-        <ul className="hidden md:flex space-x-8 font-medium text-gray-700 ">
+        <ul className="hidden md:flex space-x-8 font-medium text-gray-300">
           {navItems.map(({ name, path }) => (
             <li key={name} className="relative group">
               <NavLink
                 to={path}
                 className={({ isActive }) =>
-                  `transition-colors hover:text-indigo-500 ${
-                    isActive ? "text-indigo-600 font-semibold" : ""
+                  `transition-colors hover:text-white ${
+                    isActive ? "text-white font-semibold" : ""
                   }`
                 }
               >
                 {name}
               </NavLink>
-              {/* Animated underline */}
               <motion.div
                 layoutId="underline"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500 rounded"
-                initial={false}
-                animate={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
+                className="absolute -bottom-1 left-0 w-full h-0.5 bg-pink-500 scale-x-0 group-hover:scale-x-100 origin-left transition-transform"
               />
             </li>
           ))}
@@ -58,12 +60,12 @@ export default function Navbar() {
           <button
             onClick={toggleMenu}
             aria-label="Toggle menu"
-            className="p-2 rounded-md focus:ring-2 focus:ring-indigo-500"
+            className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
           >
             {menuOpen ? (
-              <X className="w-7 h-7 text-indigo-600" />
+              <X className="w-7 h-7 text-pink-400" />
             ) : (
-              <Menu className="w-7 h-7 text-indigo-600" />
+              <Menu className="w-7 h-7 text-indigo-400" />
             )}
           </button>
         </div>
@@ -77,17 +79,17 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white  border-t border-gray-200  overflow-hidden"
+            className="md:hidden bg-[#1e293b] border-t border-white/10 overflow-hidden"
           >
-            <ul className="flex flex-col space-y-4 px-6 py-6 text-gray-700  font-semibold">
+            <ul className="flex flex-col space-y-4 px-6 py-6 text-gray-300 font-semibold">
               {navItems.map(({ name, path }) => (
                 <li key={name}>
                   <NavLink
                     to={path}
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
-                      `block py-2 transition-colors hover:text-indigo-500 ${
-                        isActive ? "text-indigo-600" : ""
+                      `block py-2 transition-colors hover:text-white ${
+                        isActive ? "text-white" : ""
                       }`
                     }
                   >

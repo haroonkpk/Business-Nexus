@@ -2,8 +2,8 @@ import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 
 export const signup = async (req, res) => {
-  const { username, email, password } = req.body;
-  if (!username || !email || !password) {
+  const { username, email, password, role } = req.body;
+  if (!username || !email || !password || !role) {
     return res.status(400).json({ message: "All fields are required" });
   }
   if (password.length < 6) {
@@ -20,6 +20,7 @@ export const signup = async (req, res) => {
       username,
       email,
       password,
+      role,
     });
     generateToken(user._id, res);
     await user.save();

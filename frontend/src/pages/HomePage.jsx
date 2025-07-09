@@ -1,109 +1,135 @@
-// ✅ Ultra-modern HomePage (2025 style)
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Rocket, Users, ShieldCheck } from "lucide-react";
+import { Users, Rocket, ShieldCheck } from "lucide-react";
 import { Button } from "../components/ui/Button";
-
+import { useAuthStore } from "../stores/auth.store";
+import { useEffect } from "react";
 export default function HomePage() {
-  return (
-    <div className="min-h-screen bg-gradient-to-tr from-[#fdfbfb] to-[#ebedee]">
-      {/* HERO SECTION */}
+  const { authUser, checkingAuth } = useAuthStore();
 
-      <section className="flex flex-col items-center justify-center px-6 pt-20 text-center">
+  useEffect(() => {
+    checkingAuth();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#0f172a] text-white font-sans">
+      {/* HERO SECTION */}
+      <section className="px-6 pt-32 pb-20 flex flex-col items-center text-center relative overflow-hidden">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-5xl md:text-7xl font-extrabold leading-tight text-gray-900 tracking-tight"
+          className="text-6xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-br from-indigo-400 to-pink-500 bg-clip-text text-transparent"
         >
-          Build <span className="text-indigo-600">Connections</span>,<br />
-          Fund <span className="text-indigo-600">Dreams</span>
+          Empower Innovation
         </motion.h1>
-
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="max-w-2xl mt-6 text-lg text-gray-600"
+          className="mt-6 text-lg max-w-2xl text-gray-300"
         >
-          A bold platform where ideas meet capital. Elevate your journey with
-          smart collaboration and real-time communication.
+          Connect. Collaborate. Create. Business Nexus is the future of startup
+          & investor collaboration.
         </motion.p>
-
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6, duration: 0.4 }}
-          className="mt-8 flex flex-col sm:flex-row gap-4"
+          className="mt-10 flex flex-col sm:flex-row gap-4"
         >
-          <Link to="/register">
-            <Button variant="primary">Join the Network</Button>
-          </Link>
-          <Link to="/login">
-            <Button variant="outline">Login</Button>
-          </Link>
-          {/* <Button variant="primary">Go to Dashboard</Button> */}
+          {!authUser ? (
+            <>
+              <Link to="/register">
+                <Button className="px-8 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-lg shadow-xl">
+                  Join Now
+                </Button>
+              </Link>
+              <Link to="/login">
+                <Button className="px-8 py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 font-semibold text-lg">
+                  Login
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <Link to="/dashboard">
+              <Button className="px-8 py-3 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-semibold text-lg shadow-xl">
+                Go to Dashboard
+              </Button>
+            </Link>
+          )}
         </motion.div>
 
-        <motion.img
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
-          src="/assets/network-illustration.svg"
-          alt="Hero Illustration"
-          className="w-full max-w-xl mt-12"
-        />
+        <div className="relative w-full max-w-3xl mt-12 rounded-2xl overflow-hidden shadow-xl mx-auto">
+          {/* Top Fade Shadow */}
+          <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-black/20 to-transparent z-10 pointer-events-none" />
+
+          {/* Bottom Fade Shadow */}
+          <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/20 to-transparent z-10 pointer-events-none" />
+
+          {/* Spline Viewer */}
+          <spline-viewer
+            url="https://prod.spline.design/fJ2ptJKzT-sDkpfO/scene.splinecode"
+            className="w-full h-[500px]"
+          />
+        </div>
       </section>
 
       {/* FEATURES */}
-      <section className="mt-20 px-6 py-16 bg-white rounded-t-3xl shadow-inner">
-        <div className="text-center mb-14">
-          <h2 className="text-4xl font-bold text-gray-900">
-            Built for Modern Collaboration
+      <section className="py-24 px-6 bg-[#111827] rounded-t-3xl">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
+            Core Features
           </h2>
-          <p className="text-gray-500 mt-3">
-            Core features designed to connect vision with investment.
+          <p className="mt-4 text-gray-400">
+            Designed to bring transparency, speed, and security to your funding
+            journey.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
           <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-gradient-to-br from-white to-gray-100 p-6 rounded-2xl shadow-lg text-center"
+            whileHover={{ y: -8 }}
+            className="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl text-center shadow-lg hover:shadow-pink-500/30"
           >
-            <Users className="h-10 w-10 text-indigo-600 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold">Dynamic Networking</h3>
-            <p className="text-sm text-gray-500 mt-2">
-              Smart matchmaking tools to find relevant partners instantly.
+            <Users className="h-10 w-10 text-pink-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-white">
+              Dynamic Networking
+            </h3>
+            <p className="text-sm text-gray-300 mt-2">
+              Smart matchmaking tools to connect with the right people
+              instantly.
             </p>
           </motion.div>
 
           <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-gradient-to-br from-white to-gray-100 p-6 rounded-2xl shadow-lg text-center"
+            whileHover={{ y: -8 }}
+            className="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl text-center shadow-lg hover:shadow-indigo-500/30"
           >
-            <Rocket className="h-10 w-10 text-indigo-600 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold">Startup Showcase</h3>
-            <p className="text-sm text-gray-500 mt-2">
-              Share your pitch deck and get noticed by real investors.
+            <Rocket className="h-10 w-10 text-indigo-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-white">
+              Startup Showcase
+            </h3>
+            <p className="text-sm text-gray-300 mt-2">
+              Upload your ideas, showcase your vision, and get discovered.
             </p>
           </motion.div>
 
           <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-gradient-to-br from-white to-gray-100 p-6 rounded-2xl shadow-lg text-center"
+            whileHover={{ y: -8 }}
+            className="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl text-center shadow-lg hover:shadow-indigo-400/30"
           >
-            <ShieldCheck className="h-10 w-10 text-indigo-600 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold">Secure Access</h3>
-            <p className="text-sm text-gray-500 mt-2">
-              Role-based protection and real-time encrypted messaging.
+            <ShieldCheck className="h-10 w-10 text-green-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-white">Secure Access</h3>
+            <p className="text-sm text-gray-300 mt-2">
+              Fully protected real-time messaging and access control.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="mt-24 py-8 text-center text-xs text-gray-500">
+      <footer className="mt-24 py-10 text-center text-xs text-gray-500">
         &copy; {new Date().getFullYear()} Business Nexus. Designed for the
         future.
       </footer>

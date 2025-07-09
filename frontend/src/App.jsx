@@ -12,9 +12,12 @@ import { useThemeStore } from "./stores/theme.store.js";
 import Footer from "./components/Footer.jsx";
 import { useLocation } from "react-router-dom";
 import Admin from "./pages/Admin.jsx";
-import StoryLoader from "./components/StoryLoader.jsx";
 import { useStore } from "zustand";
 import { useStoryStore } from "./stores/story.store.js";
+import InvestorProfile from "./pages/Profile.jsx";
+import InvestorDashboard from "./pages/InvestorDashboard.jsx";
+import EntrepreneurDashboard from "./pages/EntrepreneurDashboard.jsx";
+import EntrepreneurProfile from "./pages/EntrepreneurProfile.jsx";
 
 function App() {
   // const location = useLocation();
@@ -39,10 +42,23 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/dashboard/investor" element={<InvestorDashboard />} />
+        <Route path="/profile/investor/:id" element={<InvestorProfile />} />
+
         <Route
-          path="/login"
-          element={<Login /> }
+          path="/dashboard/entrepreneur"
+          element={<EntrepreneurDashboard />}
         />
+        <Route
+          path="/profile/entrepreneur/:id"
+          element={<EntrepreneurProfile />}
+        />
+
+        {/* Catch-all fallback */}
+        <Route path="*" element={<Navigate to="/" />} />
+
         {/* <Route path="/stories/:typeId" element={<StoriesPage />} />
         <Route path="/episodes/:storyId" element={<EpisodePage />} />
 
