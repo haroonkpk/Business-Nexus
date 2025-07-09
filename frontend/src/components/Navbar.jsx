@@ -2,17 +2,35 @@ import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuthStore } from "../stores/auth.store";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { authUser } = useAuthStore();
+  console.log("fromm nav", authUser);
+  
 
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Features", path: "#features" },
-    { name: "Login", path: "/login" },
-    { name: "Register", path: "/register" },
-  ];
+  const navItems = authUser
+    ? [
+        { name: "Home", path: "/" },
+        { name: "About", path: "/about" },
+        { name: "Features", path: "#features" },
+
+        authUser && authUser.role === "entrepreneur"
+          ? { name: "Dashboard", path: "/dashboard/entrepreneur" }
+          : { name: "Dashboard", path: "/dashboard/investor" },
+
+        authUser && authUser.role === "investor"
+          ? { name: "Profile", path: `/profile/investor/${authUser.userId}` }
+          : { name: "Profile", path: `/profile/entrepreneur/${authUser.userId}` },
+      ]
+    : [
+        { name: "Home", path: "/" },
+        { name: "About", path: "/about" },
+        { name: "Features", path: "#features" },
+        { name: "Login", path: "/login" },
+        { name: "Register", path: "/register" },
+      ];
 
   const toggleMenu = () => setMenuOpen((v) => !v);
 

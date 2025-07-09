@@ -1,7 +1,19 @@
 import { Briefcase, User, Mail, Globe, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuthStore } from "../stores/auth.store";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function InvestorProfile() {
+  const { id } = useParams();
+  const { getUserById,Loading } = useAuthStore();
+
+  useEffect(() => {
+    getUserById(id);
+  }, []);
+
+if(Loading) return <h1>loading...</h1>
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-4xl bg-white shadow-lg rounded-2xl p-8 md:p-12">

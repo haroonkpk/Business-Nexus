@@ -1,34 +1,27 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useAuthStore } from "../stores/auth.store";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function InvestorDashboard() {
-  const [entrepreneurs, setEntrepreneurs] = useState([]);
+  const { authUser } = useAuthStore();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    // Fetch entrepreneurs from API
-    // setEntrepreneurs(data);
-  }, []);
+  // useEffect(() => {
+  //   if (!authUser || authUser.role !== "investor") navigate("/login");
+  // }, [authUser, navigate]);
+
+  // if (!authUser || authUser.role !== "investor") return null;
 
   return (
-    <div className="min-h-screen p-6">
-      <motion.h1
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-3xl font-bold mb-6"
-      >
-        Investor Dashboard
-      </motion.h1>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {entrepreneurs.map((e) => (
-          <div key={e._id} className="p-4 bg-white rounded-xl shadow">
-            <h2 className="text-xl font-semibold">{e.name}</h2>
-            <p className="text-gray-600">{e.startup}</p>
-            <p className="text-sm mt-2">{e.pitchSummary}</p>
-          </div>
-        ))}
-      </div>
+    <div className="min-h-screen p-8 bg-slate-950 text-white">
+      <h1 className="text-3xl font-bold mb-6">Investor Dashboard</h1>
+      <ul className="list-disc ml-5 space-y-2">
+        <li>View collaboration requests from entrepreneurs</li>
+        <li>Browse entrepreneurs seeking funding</li>
+        <li>Accept or reject collaboration requests</li>
+        <li>Real-time chat with connected entrepreneurs</li>
+        <li>Update your investor profile</li>
+      </ul>
     </div>
   );
 }
