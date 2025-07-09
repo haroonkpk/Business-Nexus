@@ -4,6 +4,8 @@ import { Users, Rocket, ShieldCheck } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { useAuthStore } from "../stores/auth.store";
 import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+
 export default function HomePage() {
   const { authUser, checkingAuth } = useAuthStore();
 
@@ -11,6 +13,10 @@ export default function HomePage() {
     checkingAuth();
   }, []);
 
+  const { ref, inView } = useInView({
+    triggerOnce: false, 
+    rootMargin: "-100px",
+  });
   return (
     <div className="min-h-screen bg-[#0f172a] text-white font-sans">
       {/* HERO SECTION */}
@@ -36,7 +42,7 @@ export default function HomePage() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6, duration: 0.4 }}
-          className="mt-10 flex flex-col sm:flex-row gap-4"
+          className="mt-10 flex flex-col sm:flex-row gap-4 mb-6"
         >
           {!authUser ? (
             <>
@@ -59,19 +65,19 @@ export default function HomePage() {
             </Link>
           )}
         </motion.div>
-
-        <div className="relative w-full max-w-3xl mt-12 rounded-2xl overflow-hidden shadow-xl mx-auto">
-          {/* Top Fade Shadow */}
-          <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-black/20 to-transparent z-10 pointer-events-none" />
-
-          {/* Bottom Fade Shadow */}
-          <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/20 to-transparent z-10 pointer-events-none" />
-
-          {/* Spline Viewer */}
-          <spline-viewer
-            url="https://prod.spline.design/fJ2ptJKzT-sDkpfO/scene.splinecode"
-            className="w-full h-[500px]"
-          />
+        {/* 3d */}
+        <div
+          ref={ref}
+          className="relative w-full max-w-3xl mx-auto mt-12 rounded-2xl overflow-hidden shadow-xl"
+        >
+          <div className="absolute top-0 w-full h-16 bg-gradient-to-b from-black/20 to-transparent z-10 pointer-events-none" />
+          <div className="absolute bottom-0 w-full h-16 bg-gradient-to-t from-black/20 to-transparent z-10 pointer-events-none" />
+          {inView && (
+            <spline-viewer
+              url="https://prod.spline.design/fJ2ptJKzT-sDkpfO/scene.splinecode"
+              className="w-full h-[500px]"
+            />
+          )}
         </div>
       </section>
 

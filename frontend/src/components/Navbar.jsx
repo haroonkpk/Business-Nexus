@@ -17,7 +17,7 @@ export default function Navbar() {
   const toggleMenu = () => setMenuOpen((v) => !v);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-[#0f172a]/70 backdrop-blur border-b border-white/10">
+    <header className="fixed top-0 w-full z-50 bg-[#0f172a]/50 backdrop-blur border-b border-white/10">
       <nav className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
           <motion.div

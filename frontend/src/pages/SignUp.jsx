@@ -94,8 +94,12 @@ export default function SignUp() {
             onChange={(e) => setFormData({ ...formData, role: e.target.value })}
             className="w-full bg-white/10 backdrop-blur border border-white/20 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="investor">Investor</option>
-            <option value="entrepreneur">Entrepreneur</option>
+            <option value="investor" className="bg-[#0f172a] text-white">
+              Investor
+            </option>
+            <option value="entrepreneur" className="bg-[#0f172a] text-white">
+              Entrepreneur
+            </option>
           </select>
 
           <button
