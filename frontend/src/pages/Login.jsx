@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../stores/auth.store.js";
 
 export default function Login() {
-  const { UserSignUp, authUser, isSignuping } = useAuthStore(); // You may want to rename `UserSignUp` to `UserLogin`
+  const { UserLogin, authUser, isLogining } = useAuthStore(); // 🛠 Login function
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -14,50 +14,47 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    UserSignUp(formData); // If this is login, change this to `UserLogin`
+    UserLogin(formData); // 🛠 Use login instead of signup
   }
 
-  if (authUser) {
-    return <Navigate to="/" />;
-  }
+  if (authUser) return <Navigate to="/" />;
 
   return (
-    <div className="w-full h-screen flex items-center justify-center px-6 pt-26">
-      {/* Login LEFT SIDE */}
-      <div className="w-full max-w-xl lg:w-1/2 flex flex-col justify-center items-center space-y-8 px-4 md:px-12">
+    <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center bg-[#0f172a] text-white px-6 pt-24">
+      {/* Left Form Side */}
+      <div className="w-full max-w-xl flex flex-col justify-center space-y-8">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl md:text-5xl font-extrabold text-gray-900 text-center"
+          className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-400 to-pink-500 text-center"
         >
-          Welcome <span className="text-indigo-600">Back</span>
+          Welcome Back
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-center text-gray-600 text-base md:text-lg"
+          className="text-center text-gray-400 text-base md:text-lg"
         >
-          Log in to your account and continue your journey.
+          Login to your account and continue building your network.
         </motion.p>
 
-        {/* form */}
-        <form onSubmit={handleSubmit} className="space-y-5 w-full max-w-md">
-          <label className="input w-full">
-            <input
-              type="email"
-              placeholder="haroon@gmail.com"
-              required
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
-          </label>
+        {/* Login Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <input
+            type="email"
+            required
+            placeholder="Email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+            className="w-full bg-white/10 backdrop-blur border border-white/20 rounded-xl px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
 
-          <label className="input w-full">
+          <div className="relative w-full">
             <input
               type={showPassword ? "text" : "password"}
               required
@@ -66,47 +63,47 @@ export default function Login() {
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
+              className="w-full bg-white/10 backdrop-blur border border-white/20 rounded-xl px-4 py-3 pr-10 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="text-gray-500 ml-2"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
-          </label>
+          </div>
 
           <button
             type="submit"
-            className="btn bg-indigo-600 text-white hover:bg-indigo-700 transition w-full"
+            className="w-full py-3 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-xl font-semibold text-white hover:opacity-90 transition-all"
           >
-            {isSignuping ? (
-              <>
-                <LoaderPinwheel className="size-5 animate-spin mr-2" />
-                Logging in...
-              </>
+            {isLogining ? (
+              <div className="flex items-center justify-center gap-2">
+                <LoaderPinwheel className="size-5 animate-spin" /> Logging in...
+              </div>
             ) : (
               "Login"
             )}
           </button>
         </form>
 
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-400 text-center">
           Don’t have an account?{" "}
-          <Link
-            to="/register"
-            className="text-indigo-600 font-medium hover:underline"
-          >
-            Register
+          <Link to="/register" className="text-pink-400 hover:underline">
+            Sign up
           </Link>
         </div>
       </div>
 
-      {/* right Side */}
+      {/* Right Side Illustration */}
       <motion.img
+        initial={{ opacity: 0, x: 40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.5, duration: 0.6 }}
         src="/assets/Live collaboration-rafiki.svg"
         alt="Hero Illustration"
-        className="hidden lg:block w-full max-w-xl mt-12"
+        className="hidden lg:block w-full max-w-xl mt-12 drop-shadow-2xl"
       />
     </div>
   );

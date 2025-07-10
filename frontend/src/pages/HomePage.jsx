@@ -123,7 +123,7 @@ export default function HomePage() {
 
           <motion.div
             whileHover={{ y: -8 }}
-            className="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl text-center shadow-lg hover:shadow-indigo-400/30"
+            className="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl text-center shadow-lg hover:shadow-green-400/30"
           >
             <ShieldCheck className="h-10 w-10 text-green-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-white">Secure Access</h3>

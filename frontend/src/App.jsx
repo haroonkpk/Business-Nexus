@@ -10,6 +10,7 @@ import EntrepreneurDashboard from "./pages/EntrepreneurDashboard.jsx";
 import EntrepreneurProfile from "./pages/EntrepreneurProfile.jsx";
 import { useAuthStore } from "./stores/auth.store.js";
 import { useEffect } from "react";
+import ProfileEditForInvestor from "./components/ProfileEditForInvester.jsx";
 
 function App() {
   // const location = useLocation();
@@ -36,6 +37,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard/investor" element={<InvestorDashboard />} />
         <Route path="/profile/investor/:id" element={<InvestorProfile />} />
+        <Route path="/profile/investor/edit" element={<ProfileEditForInvestor />} />
         <Route
           path="/dashboard/entrepreneur"
           element={<EntrepreneurDashboard />}
