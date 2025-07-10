@@ -7,22 +7,23 @@ import { useAuthStore } from "../stores/auth.store";
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { authUser } = useAuthStore();
-  console.log("fromm nav", authUser);
-  
 
   const navItems = authUser
     ? [
         { name: "Home", path: "/" },
         { name: "About", path: "/about" },
-        { name: "Features", path: "#features" },
-
+        
         authUser && authUser.role === "entrepreneur"
-          ? { name: "Dashboard", path: "/dashboard/entrepreneur" }
-          : { name: "Dashboard", path: "/dashboard/investor" },
-
+        ? { name: "Dashboard", path: "/dashboard/entrepreneur" }
+        : { name: "Dashboard", path: "/dashboard/investor" },
+        
         authUser && authUser.role === "investor"
-          ? { name: "Profile", path: `/profile/investor/${authUser.userId}` }
-          : { name: "Profile", path: `/profile/entrepreneur/${authUser.userId}` },
+        ? { name: "Profile", path: `/profile/investor/${authUser.userId}` }
+        : {
+          name: "Profile",
+          path: `/profile/entrepreneur/${authUser.userId}`,
+        },
+        authUser && { name: "Logout", path: "/logout" },
       ]
     : [
         { name: "Home", path: "/" },

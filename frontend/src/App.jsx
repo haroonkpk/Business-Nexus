@@ -4,13 +4,15 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar.jsx";
-import InvestorProfile from "./pages/Profile.jsx";
+import InvestorProfile from "./pages/InvestorProfile.jsx";
 import InvestorDashboard from "./pages/InvestorDashboard.jsx";
 import EntrepreneurDashboard from "./pages/EntrepreneurDashboard.jsx";
 import EntrepreneurProfile from "./pages/EntrepreneurProfile.jsx";
 import { useAuthStore } from "./stores/auth.store.js";
 import { useEffect } from "react";
 import ProfileEditForInvestor from "./components/ProfileEditForInvester.jsx";
+import Logout from "./pages/Logout.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
 
 function App() {
   // const location = useLocation();
@@ -37,7 +39,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard/investor" element={<InvestorDashboard />} />
         <Route path="/profile/investor/:id" element={<InvestorProfile />} />
-        <Route path="/profile/investor/edit" element={<ProfileEditForInvestor />} />
+        <Route
+          path="/profile/investor/edit"
+          element={<ProfileEditForInvestor />}
+        />
         <Route
           path="/dashboard/entrepreneur"
           element={<EntrepreneurDashboard />}
@@ -46,14 +51,14 @@ function App() {
           path="/profile/entrepreneur/:id"
           element={<EntrepreneurProfile />}
         />
-
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/about" element={<AboutPage />} />
         {/* Catch-all fallback */}
         <Route path="*" element={<Navigate to="/" />} />
 
         {/* <Route path="/stories/:typeId" element={<StoriesPage />} />
         <Route path="/episodes/:storyId" element={<EpisodePage />} />
 
-        <Route path="/about" element={<AboutPage />} />
         <Route
           path="/admin-dashboard"
           element={authUser?.role === "admin" ? <Admin /> : <Navigate to="/" />}

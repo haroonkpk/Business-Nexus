@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../stores/auth.store.js";
 
 export default function Login() {
-  const { UserLogin, authUser, isLogining } = useAuthStore(); // 🛠 Login function
+  const { UserLogin, authUser, isLogining } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -14,7 +14,7 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    UserLogin(formData); // 🛠 Use login instead of signup
+    UserLogin(formData); 
   }
 
   if (authUser) return <Navigate to="/" />;

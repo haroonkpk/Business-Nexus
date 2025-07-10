@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { Users, Rocket, ShieldCheck } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { useAuthStore } from "../stores/auth.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 export default function HomePage() {
   const { authUser, checkingAuth } = useAuthStore();
+  const [showModel, setShowModel] = useState(true);
 
   useEffect(() => {
     checkingAuth();
@@ -58,21 +59,34 @@ export default function HomePage() {
               </Link>
             </>
           ) : (
-            <Link to="/dashboard">
+            <Link to="/dashboard/investor">
               <Button className="px-8 py-3 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-semibold text-lg shadow-xl">
                 Go to Dashboard
               </Button>
             </Link>
           )}
         </motion.div>
-        {/* 3d */}
+        {/* 3D Section */}
         <div
           ref={ref}
-          className="relative w-full max-w-3xl mx-auto mt-12 rounded-2xl overflow-hidden shadow-xl"
+          className="relative w-full max-w-3xl mx-auto mt-12 rounded-2xl shadow-xl"
         >
+          {/* Top & bottom shadows */}
           <div className="absolute top-0 w-full h-16 bg-gradient-to-b from-black/20 to-transparent z-10 pointer-events-none" />
           <div className="absolute bottom-0 w-full h-16 bg-gradient-to-t from-black/20 to-transparent z-10 pointer-events-none" />
-          {inView && (
+
+          {/* Toggle Button (always visible) */}
+          <div className="absolute top-4 right-4 z-20">
+            <button
+              onClick={() => setShowModel((prev) => !prev)}
+              className="px-3 py-1 text-sm rounded-full bg-white/10 backdrop-blur border border-white/20 hover:bg-white/20 transition text-white"
+            >
+              {showModel ? "Hide 3D Model" : "Show 3D Model"}
+            </button>
+          </div>
+
+          {/* Model render (based on conditions) */}
+          {inView && showModel && (
             <spline-viewer
               url="https://prod.spline.design/fJ2ptJKzT-sDkpfO/scene.splinecode"
               className="w-full h-[500px]"
