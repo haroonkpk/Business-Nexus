@@ -15,21 +15,12 @@ import Logout from "./pages/Logout.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 
 function App() {
-  // const location = useLocation();
-
-  const { authUser, checkingAuth, isCheckingAuth } = useAuthStore();
-  // const { theme } = useThemeStore();
-  // const { loading } = useStoryStore();
-
-  // useEffect(() => {
-  //   document.querySelector("html").setAttribute("data-theme", theme);
-  // }, [theme]);
+  const { checkingAuth} = useAuthStore();
 
   useEffect(() => {
     checkingAuth();
   }, [checkingAuth]);
 
-  // if (isCheckingAuth) return <StoryLoader />;
   return (
     <div className="min-h-screen bg-base-200 relative overflow-auto">
       <Navbar />
@@ -55,22 +46,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         {/* Catch-all fallback */}
         <Route path="*" element={<Navigate to="/" />} />
-
-        {/* <Route path="/stories/:typeId" element={<StoriesPage />} />
-        <Route path="/episodes/:storyId" element={<EpisodePage />} />
-
-        <Route
-          path="/admin-dashboard"
-          element={authUser?.role === "admin" ? <Admin /> : <Navigate to="/" />}
-        /> */}
-        {/* <Route path="/episode/:episodeId" element={<EpisodeDetail />} /> */}
       </Routes>
       <Toaster position="top-center" reverseOrder={true} />
-      {/* {!(
-        location.pathname === "/login" ||
-        location.pathname === "/signup" ||
-        location.pathname === "/admin-dashboard"
-      ) && <Footer />} */}
     </div>
   );
 }

@@ -1,23 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { LoaderPinwheel } from "lucide-react";
+import { useProfileStore } from "../stores/profile.store";
 
 export default function ProfileEditForInvestor() {
+  const { updateProfile, profile, loading } = useProfileStore();
   const [formData, setFormData] = useState({
-    bio: "I'm an investor passionate about startups and emerging tech.",
-    investmentInterests: "AI, Fintech, Healthtech",
+    bio: "",
+    investmentInterests: "",
   });
-  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        bio: profile.bio || "",
+        investmentInterests: profile.investmentInterests || "",
+      });
+    }
+  }, [profile]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    setSubmitting(true);
-    setTimeout(() => {
-      alert("Profile updated! (Dummy)");
-      setSubmitting(false);
-    }, 1500);
+    updateProfile(formData);
   }
 
+  if (loading)
+    return (
+      <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
+        Loading...
+      </h1>
+    );
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 pt-24">
       <div className="max-w-xl mx-auto bg-white/10 backdrop-blur border border-white/20 rounded-xl shadow-xl p-6 space-y-6">
@@ -48,17 +60,20 @@ export default function ProfileEditForInvestor() {
             placeholder="Investment interests (comma separated)"
             value={formData.investmentInterests}
             onChange={(e) =>
-              setFormData({ ...formData, investmentInterests: e.target.value })
+              setFormData({
+                ...formData,
+                investmentInterests: e.target.value,
+              })
             }
             className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
 
           <button
             type="submit"
-            disabled={submitting}
+            disabled={loading}
             className="w-full py-3 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-xl font-semibold text-white hover:opacity-90 transition"
           >
-            {submitting ? (
+            {loading ? (
               <div className="flex items-center justify-center gap-2">
                 <LoaderPinwheel className="size-5 animate-spin" /> Updating...
               </div>

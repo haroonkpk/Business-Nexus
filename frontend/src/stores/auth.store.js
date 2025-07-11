@@ -3,16 +3,19 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 
 export const useAuthStore = create((set) => ({
-  authUser: null,
+  authUser: JSON.parse(localStorage.getItem("authUser")) || null,
+  Entrepreneurs:null,
   isCheckingAuth: true,
   isSignuping: false,
   isLogining: false,
   isLogouting: false,
   Loading: false,
 
+
   checkingAuth: async () => {
     try {
       const res = await axiosInstance.get("/auth/checkAuth");
+      localStorage.setItem("authUser", JSON.stringify(res.data));
       set({ authUser: res.data });
     } catch (error) {
       console.error("error in checkingauth fun", error);
@@ -30,10 +33,22 @@ export const useAuthStore = create((set) => ({
       set({ Loading: false });
     }
   },
+  getEntrepreneurs: async ()=>{
+    set({Loading:true});
+    try {
+      const res = await axiosInstance.get("/auth/entrepreneurs");
+      set({ Entrepreneurs: res.data });
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      set({ Loading: false });
+    }
+  },
   UserSignUp: async (formData) => {
     try {
       set({ isSignuping: true });
       const res = await axiosInstance.post("/auth/signup", formData);
+      localStorage.setItem("authUser", JSON.stringify(res.data)); 
       set({ authUser: res.data });
       toast.success("Sign up successful!");
     } catch (error) {
@@ -47,6 +62,7 @@ export const useAuthStore = create((set) => ({
     set({ isLogining: true });
     try {
       const res = await axiosInstance.post("/auth/login", formData);
+      localStorage.setItem("authUser", JSON.stringify(res.data));
       set({ authUser: res.data });
       toast.success("Login successful!");
     } catch (error) {
@@ -59,6 +75,7 @@ export const useAuthStore = create((set) => ({
     set({ isLogouting: true });
     try {
       axiosInstance.post("/auth/logout");
+      localStorage.removeItem("authUser");
       set({ authUser: null });
       toast.success("Logout successful!");
     } catch (error) {

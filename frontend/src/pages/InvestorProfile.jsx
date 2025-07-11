@@ -1,21 +1,18 @@
 import { Briefcase, User, Mail, Globe, ArrowRight, Pencil } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useProfileStore } from "../stores/profile.store";
 
 export default function InvestorProfile() {
-  const [profile, setProfile] = useState(null);
+  const { id } = useParams();
+  const { getProfile, profile } = useProfileStore();
+
+  // const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    setProfile({
-      user: {
-        name: "Haroon Khan",
-        email: "haroon@email.com",
-      },
-      bio: "I'm an investor passionate about supporting early-stage startups. I focus on technology-driven companies with high growth potential.",
-      investmentInterests: ["AI", "Fintech", "Healthtech"],
-    });
-  }, []);
+    getProfile(id);
+  }, [id]);
 
   if (!profile)
     return (
@@ -42,7 +39,7 @@ export default function InvestorProfile() {
             <ProfileField
               icon={<User className="text-indigo-400" />}
               label="Name"
-              value={profile.user.name}
+              value={profile.user.username}
             />
             <ProfileField
               icon={<Mail className="text-indigo-400" />}
@@ -52,7 +49,7 @@ export default function InvestorProfile() {
             <ProfileField
               icon={<Briefcase className="text-indigo-400" />}
               label="Interested In"
-              value={profile.investmentInterests.join(", ")}
+              value={profile.investmentInterests?.join(", ") || "N/A"}
             />
             <ProfileField
               icon={<Globe className="text-indigo-400" />}
@@ -69,7 +66,7 @@ export default function InvestorProfile() {
               transition={{ delay: 0.2 }}
               className="text-gray-300 text-base leading-relaxed"
             >
-              {profile.bio}
+              {profile.bio  || "N/A"}
             </motion.p>
             <Link to={"/dashboard/investor"}>
               <motion.button

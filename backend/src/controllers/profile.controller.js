@@ -1,14 +1,23 @@
 import Profile from "../models/profile.js";
-import User from "../models/User.js";
-
-//  GET Profile by ID
+import User from "../models/user.model.js";
 export const getProfile = async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.params.id }).populate(
-      "user",
-      "name email role"
+    let profile = await Profile.findOne({ user: req.params.id }).populate(
+      "user"
     );
-    if (!profile) return res.status(404).json({ message: "Profile not found" });
+
+    // Profile not found, return user info only
+    if (!profile) {
+      const user = await User.findById(req.params.id).select("-password");
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      // Send minimal profile with empty fields
+      return res.json({
+        user,
+      });
+    }
+
+    // Profile found
     res.json(profile);
   } catch (err) {
     res.status(500).json({ message: "Error fetching profile" });
@@ -17,9 +26,10 @@ export const getProfile = async (req, res) => {
 
 //  UPDATE Own Profile
 export const updateProfile = async (req, res) => {
+
   try {
     const updated = await Profile.findOneAndUpdate(
-      { user: req.user._id },
+      { user: req.user.id },
       { $set: req.body },
       { new: true, upsert: true }
     );

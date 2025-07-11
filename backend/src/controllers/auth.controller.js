@@ -41,20 +41,20 @@ export const login = async (req, res) => {
       .status(400)
       .json({ message: "Password must be at least 6 characters" });
   }
-  const userExists =await User.findOne({ email });
+  const userExists = await User.findOne({ email });
   if (!userExists) {
     return res.status(400).json({ message: "User does not exist" });
   }
   const isMatch = await userExists.comparePassword(password);
   if (!isMatch) {
-   return res.status(400).json({ message: "password incorrect" });
+    return res.status(400).json({ message: "password incorrect" });
   }
   try {
     generateToken(userExists._id, res);
     res.status(201).json({
       _id: userExists._id,
       username: userExists.username,
-      email: userExists.email
+      email: userExists.email,
     });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
@@ -63,10 +63,10 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
   try {
-    res.cookie("jwt", "",{maxAge: 0 })
-    res.status(201).json({message: "User sucsissfully "});
-  } catch(error){
-    res.status(500).json({massege: "error in logout route"})
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(201).json({ message: "User sucsissfully " });
+  } catch (error) {
+    res.status(500).json({ massege: "error in logout route" });
   }
 };
 
@@ -77,14 +77,22 @@ export const checkAuth = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     res.status(200).json({
-      userId:user._id,
+      userId: user._id,
       username: user.username,
       email: user.email,
       role: user.role,
-      createdAt: user.createdAt
-
-    })
+      createdAt: user.createdAt,
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error in checkAuth Route" });
+  }
+};
+
+export const getEntrepreneurs = async (req, res) => {
+  try {
+    const entrepreneurs = await User.find({ role: "entrepreneur" });
+    res.json(entrepreneurs);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching entrepreneurs" });
   }
 };
