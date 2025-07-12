@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import ProfileEditForInvestor from "./components/ProfileEditForInvester.jsx";
 import Logout from "./pages/Logout.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
+import EditEntrepreneurProfile from "./components/EditEntrepreneurProfile.jsx";
 
 function App() {
   const { checkingAuth} = useAuthStore();
@@ -41,6 +42,10 @@ function App() {
         <Route
           path="/profile/entrepreneur/:id"
           element={<EntrepreneurProfile />}
+        />
+        <Route
+          path="/profile/entrepreneur/edit"
+          element={<EditEntrepreneurProfile />}
         />
         <Route path="/logout" element={<Logout />} />
         <Route path="/about" element={<AboutPage />} />

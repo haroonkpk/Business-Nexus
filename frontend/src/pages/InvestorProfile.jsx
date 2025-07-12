@@ -66,15 +66,20 @@ export default function InvestorProfile() {
               transition={{ delay: 0.2 }}
               className="text-gray-300 text-base leading-relaxed"
             >
-              {profile.bio  || "N/A"}
+              {profile.bio || "N/A"}
             </motion.p>
             <Link to={"/dashboard/investor"}>
               <motion.button
-                whileTap={{ scale: 0.95 }}
-                className="text-[14px] md:text-[18px] inline-flex items-center justify-center bg-gradient-to-br from-indigo-500 to-pink-500 text-white px-5 py-2 rounded-xl font-medium hover:opacity-90 transition-all"
+                whileHover={{ scale: 1.015 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 250, damping: 20 }}
+                className="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white font-medium shadow-[0_0_10px_#00000033] hover:bg-white/20 hover:shadow-[0_0_18px_#ffffff33] transition-all duration-300"
               >
-                Connect with Entrepreneurs{" "}
-                <ArrowRight size={18} className="ml-1 md:ml-2 md:size-[23px]" />
+                Connect with Entrepreneurs
+                <ArrowRight
+                  size={18}
+                  className="transition-transform group-hover:translate-x-1"
+                />
               </motion.button>
             </Link>
           </div>

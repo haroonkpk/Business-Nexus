@@ -19,14 +19,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["investor", "entrepreneur"],
   },
-  addToFavorites: [
-    {
-      story: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Story",
-      },
-    },
-  ],
   Timestamp: {
     type: Date,
     default: Date.now,
