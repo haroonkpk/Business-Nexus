@@ -3,7 +3,7 @@ export const createRequest = async (req, res) => {
   const { toProfileId } = req.body;
   const fromProfileId = req.user.profileId;
 
-  if(!fromProfileId){
+  if (!fromProfileId) {
     return res.status(404).json({ msg: "Please create your profile first" });
   }
 
@@ -21,8 +21,7 @@ export const createRequest = async (req, res) => {
   res.status(201).json(newRequest);
 };
 
-
-export const getSentReqStatuses = async (req, res ) => {
+export const getSentReqStatuses = async (req, res) => {
   const profileId = req.user.profileId;
   try {
     const sent = await CollabRequest.find({ from: profileId }).populate("to");
@@ -30,4 +29,12 @@ export const getSentReqStatuses = async (req, res ) => {
   } catch (error) {
     res.status(500).json({ message: "Error fetching sent requests" });
   }
-}
+};
+
+export const getRequest = async (req, res) => {
+  const profileId = req.user.profileId;
+  const received = await CollabRequest.find({ to: profileId })
+    .populate("from")
+    .populate({ path: "from", populate: { path: "user" } });
+  res.json(received);
+};

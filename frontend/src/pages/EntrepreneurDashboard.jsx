@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useRequestStore } from "../stores/request.store";
 
 const dummyRequests = [
   {
@@ -31,6 +32,10 @@ export default function EntrepreneurDashboard() {
     alert(`Request ${id} ${newStatus}`);
     // Actual logic will come later to update status
   };
+  const { getReceivedReq } = useRequestStore();
+  useEffect(() => {
+    getReceivedReq();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 pt-24">

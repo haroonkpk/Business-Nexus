@@ -15,7 +15,7 @@ export const useProfileStore = create((set) => ({
       set({ profile: res.data });
       localStorage.setItem("profile", JSON.stringify(res.data));
     } catch (error) {
-      if (err.response?.status === 404) {
+      if (error.response?.status === 404) {
         set({ profile: "notfound" });
       } else {
         toast.error("Error fetching profile");

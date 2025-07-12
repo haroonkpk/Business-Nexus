@@ -14,6 +14,8 @@ export default function InvestorDashboard() {
     getSnetRequests();
   }, []);
 
+
+
   const getStatus = (entrepreneurProfileId) => {
     const found = requests.find((req) => req.to._id === entrepreneurProfileId);
     return found ? found.status : null;
@@ -72,6 +74,7 @@ export default function InvestorDashboard() {
                     onClick={async () => {
                       try {
                         await createRequest(e._id);
+                        await getSnetRequests();
                       } catch (err) {
                         console.error("Request failed:", err);
                         toast.error("Request failed. Try again.");
