@@ -1,5 +1,6 @@
 import Profile from "../models/profile.js";
 import User from "../models/user.model.js";
+
 export const getProfile = async (req, res) => {
   try {
     let profile = await Profile.findOne({ user: req.params.id }).populate(
@@ -23,10 +24,8 @@ export const getProfile = async (req, res) => {
     res.status(500).json({ message: "Error fetching profile" });
   }
 };
-
 //  UPDATE Own Profile
 export const updateProfile = async (req, res) => {
-
   try {
     const updated = await Profile.findOneAndUpdate(
       { user: req.user.id },
@@ -38,3 +37,24 @@ export const updateProfile = async (req, res) => {
     res.status(500).json({ message: "Error updating profile" });
   }
 };
+
+export const entrepreneurs = async (req, res) => {
+  try {
+    const entrepreneurProfiles = await Profile.find().populate({
+      path: "user",
+      match: { role: "entrepreneur" },
+      select: "-password",
+    });
+
+    const filteredProfiles = entrepreneurProfiles.filter(
+      (profile) => profile.user !== null
+    );
+
+    res.json(filteredProfiles);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch entrepreneur profiles", error });
+  }
+};
+
