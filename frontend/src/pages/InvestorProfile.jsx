@@ -69,7 +69,7 @@ export default function InvestorProfile() {
               {profile.bio || "N/A"}
             </motion.p>
 
-            {authUser.role === "investor" && authUser.userId !== id && (
+            {authUser.role === "investor" && (
               <Link to={"/dashboard/investor"}>
                 <motion.button
                   whileHover={{ scale: 1.015 }}
@@ -89,7 +89,7 @@ export default function InvestorProfile() {
         </div>
 
         {/* Edit Button */}
-        {authUser.role === "investor" && authUser.userId !== id && (
+        {authUser.role === "investor" && (
           <div className="mt-10 text-center">
             <Link
               to="/profile/investor/edit"

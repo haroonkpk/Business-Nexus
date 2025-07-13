@@ -50,6 +50,7 @@ export default function InvestorDashboard() {
               transition={{ delay: 0.1 * i, duration: 0.4 }}
               className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5 shadow-md flex flex-col justify-between"
             >
+              <Link to={`/profile/entrepreneur/${e.user?._id}`} >
               <div className="space-y-2">
                 <h2 className="text-xl font-bold text-white">
                   {e.user?.username}
@@ -59,6 +60,7 @@ export default function InvestorDashboard() {
                   {e.startupDescription}
                 </p>
               </div>
+              </Link>
 
               <div className="mt-4">
                 {status === "Accepted" ? (
