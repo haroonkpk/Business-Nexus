@@ -38,3 +38,26 @@ export const getRequest = async (req, res) => {
     .populate({ path: "from", populate: { path: "user" } });
   res.json(received);
 };
+
+export const updateStatus = async (req, res) => {
+   const { updatedStatus } = req.body;
+   const profileId = req.user.profileId;
+try{
+
+  if (!["Accepted", "Rejected"].includes(updatedStatus)) {
+    return res.status(400).json({ msg: "Invalid status" });
+  }
+
+   const reqToUpdate = await CollabRequest.findOne({
+     _id: req.params.id,
+     to: profileId,
+    });
+    if (!reqToUpdate) return res.status(404).json({ msg: "Request not found" });
+    
+    reqToUpdate.status = updatedStatus;
+    await reqToUpdate.save();
+    res.json(reqToUpdate);
+  }catch(error){
+   res.status(500).json({ message: "Error Updating requests" });
+  }
+};

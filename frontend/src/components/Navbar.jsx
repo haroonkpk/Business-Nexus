@@ -28,7 +28,6 @@ export default function Navbar() {
     : [
         { name: "Home", path: "/" },
         { name: "About", path: "/about" },
-        { name: "Features", path: "#features" },
         { name: "Login", path: "/login" },
         { name: "Register", path: "/register" },
       ];

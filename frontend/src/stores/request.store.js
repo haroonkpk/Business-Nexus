@@ -46,4 +46,18 @@ export const useRequestStore = create((set) => ({
       set({ loading: false });
     }
   },
+
+  // ======== update ============
+
+  updateStatus: async (id, updatedStatus) => {
+    set({ loading: true });
+    console.log(id,updatedStatus);
+    
+    try {
+      await axiosInstance.put(`/request/${id}`, {updatedStatus:updatedStatus});
+      toast.success(`requst${updatedStatus}`);
+    } catch (error) {
+      toast.error("try Again");
+    }
+  },
 }));

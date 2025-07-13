@@ -3,39 +3,17 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useRequestStore } from "../stores/request.store";
 
-const dummyRequests = [
-  {
-    _id: "1",
-    investorName: "Sarah Malik",
-    investorBio: "Tech-focused investor interested in clean energy startups.",
-    status: "Pending",
-    investorId: "inv123",
-  },
-  {
-    _id: "2",
-    investorName: "Adeel Khan",
-    investorBio: "10+ years investing in fintech and SaaS platforms.",
-    status: "Accepted",
-    investorId: "inv456",
-  },
-  {
-    _id: "3",
-    investorName: "Maria Shah",
-    investorBio: "Focused on empowering women-led businesses.",
-    status: "Rejected",
-    investorId: "inv789",
-  },
-];
-
 export default function EntrepreneurDashboard() {
-  const handleAction = (id, newStatus) => {
-    alert(`Request ${id} ${newStatus}`);
-    // Actual logic will come later to update status
-  };
-  const { getReceivedReq } = useRequestStore();
+  const { ReceivedRequests, getReceivedReq, updateStatus } = useRequestStore();
+
   useEffect(() => {
     getReceivedReq();
   }, []);
+
+  const handleAction = async (id, newStatus) => {
+    await updateStatus(id, newStatus);
+    await getReceivedReq();
+  };
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 pt-24">
@@ -50,7 +28,7 @@ export default function EntrepreneurDashboard() {
         </motion.h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {dummyRequests.map((req) => (
+          {ReceivedRequests.map((req) => (
             <motion.div
               key={req._id}
               whileHover={{ scale: 1.02 }}
@@ -59,29 +37,18 @@ export default function EntrepreneurDashboard() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-lg font-semibold text-white">
-                    {req.investorName}
+                    {req.from?.user?.username}
                   </p>
                   <p className="text-gray-400 text-sm">
-                    {req.investorBio?.slice(0, 60)}
+                    {req.from?.bio?.slice(0, 60)}
                   </p>
                 </div>
-                <span
-                  className={`px-3 py-1 text-xs rounded-full font-semibold text-white ${
-                    req.status === "Pending"
-                      ? "bg-yellow-500"
-                      : req.status === "Accepted"
-                      ? "bg-green-600"
-                      : "bg-red-500"
-                  }`}
-                >
-                  {req.status}
-                </span>
               </div>
 
               {/* Actions */}
               <div className="flex flex-wrap items-center gap-4 mt-4">
                 <Link
-                  to={`/investor/${req.investorId}`}
+                  to={`/profile/investor/${req.from?.user?._id}`}
                   className="text-sm text-indigo-400 hover:underline"
                 >
                   View Profile
@@ -89,7 +56,7 @@ export default function EntrepreneurDashboard() {
 
                 {req.status === "Accepted" && (
                   <Link
-                    to={`/chat/${req.investorId}`}
+                    to={`/chat/${req.from?._id}`}
                     className="text-sm text-pink-400 hover:underline"
                   >
                     Message

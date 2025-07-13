@@ -39,12 +39,12 @@ export default function InvestorProfile() {
             <ProfileField
               icon={<User className="text-indigo-400" />}
               label="Name"
-              value={profile.user.username}
+              value={profile.user?.username}
             />
             <ProfileField
               icon={<Mail className="text-indigo-400" />}
               label="Email"
-              value={profile.user.email}
+              value={profile.user?.email}
             />
             <ProfileField
               icon={<Briefcase className="text-indigo-400" />}
