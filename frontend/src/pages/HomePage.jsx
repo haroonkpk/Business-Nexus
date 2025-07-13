@@ -48,8 +48,8 @@ export default function HomePage() {
           {!authUser ? (
             <>
               <Link to="/register">
-                <Button className="px-8 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-lg shadow-xl">
-                  Join Now
+                <Button className="px-8 py-3 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-semibold text-lg shadow-xl">
+                  Join now
                 </Button>
               </Link>
               <Link to="/login">

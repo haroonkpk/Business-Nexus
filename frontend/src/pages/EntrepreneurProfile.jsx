@@ -12,16 +12,18 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useProfileStore } from "../stores/profile.store";
+import { useAuthStore } from "../stores/auth.store";
 
 export default function EntrepreneurProfile() {
   const { id } = useParams();
-  const { getProfile, profile } = useProfileStore();
+  const { getProfile, profile,loading } = useProfileStore();
+  const{authUser}=useAuthStore()
 
   useEffect(() => {
     getProfile(id);
   }, [id]);
 
-  if (!profile)
+  if (!profile || loading)
     return (
       <h1 className="w-full h-screen bg-[#0f172a] text-white text-center pt-20">
         Loading...
@@ -77,6 +79,8 @@ export default function EntrepreneurProfile() {
               label="startupDescription Summary"
               value={profile.startupDescription || "No summary added yet."}
             />
+
+            {authUser.role === "entrepreneur" && (
             <Link to="/dashboard/entrepreneur">
               <motion.button
                 whileHover={{ scale: 1.015 }}
@@ -91,10 +95,13 @@ export default function EntrepreneurProfile() {
                 />
               </motion.button>
             </Link>
+            )}
           </div>
         </div>
 
         {/* Edit Button */}
+        {authUser.role === "entrepreneur" && (
+
         <div className="mt-10 text-center">
           <Link
             to="/profile/entrepreneur/edit"
@@ -104,7 +111,8 @@ export default function EntrepreneurProfile() {
             Edit Profile
           </Link>
         </div>
-      </div>
+        )}
+        </div>
     </div>
   );
 }

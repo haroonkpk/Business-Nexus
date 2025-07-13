@@ -3,18 +3,18 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useProfileStore } from "../stores/profile.store";
+import { useAuthStore } from "../stores/auth.store";
 
 export default function InvestorProfile() {
   const { id } = useParams();
-  const { getProfile, profile } = useProfileStore();
-
-  // const [profile, setProfile] = useState(null);
+  const { getProfile, profile, loading } = useProfileStore();
+  const { authUser } = useAuthStore();
 
   useEffect(() => {
     getProfile(id);
   }, [id]);
 
-  if (!profile)
+  if (!profile || loading)
     return (
       <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
         Loading...
@@ -68,33 +68,38 @@ export default function InvestorProfile() {
             >
               {profile.bio || "N/A"}
             </motion.p>
-            <Link to={"/dashboard/investor"}>
-              <motion.button
-                whileHover={{ scale: 1.015 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 250, damping: 20 }}
-                className="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white font-medium shadow-[0_0_10px_#00000033] hover:bg-white/20 hover:shadow-[0_0_18px_#ffffff33] transition-all duration-300"
-              >
-                Connect with Entrepreneurs
-                <ArrowRight
-                  size={18}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </motion.button>
-            </Link>
+
+            {authUser.role === "investor" && authUser.userId !== id && (
+              <Link to={"/dashboard/investor"}>
+                <motion.button
+                  whileHover={{ scale: 1.015 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 250, damping: 20 }}
+                  className="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white font-medium shadow-[0_0_10px_#00000033] hover:bg-white/20 hover:shadow-[0_0_18px_#ffffff33] transition-all duration-300"
+                >
+                  Connect with Entrepreneurs
+                  <ArrowRight
+                    size={18}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </motion.button>
+              </Link>
+            )}
           </div>
         </div>
 
         {/* Edit Button */}
-        <div className="mt-10 text-center">
-          <Link
-            to="/profile/investor/edit"
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 transition"
-          >
-            <Pencil className="w-4 h-4 text-pink-400" />
-            Edit Profile
-          </Link>
-        </div>
+        {authUser.role === "investor" && authUser.userId !== id && (
+          <div className="mt-10 text-center">
+            <Link
+              to="/profile/investor/edit"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 transition"
+            >
+              <Pencil className="w-4 h-4 text-pink-400" />
+              Edit Profile
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

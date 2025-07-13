@@ -95,16 +95,6 @@ export default function Login() {
           </Link>
         </div>
       </div>
-
-      {/* Right Side Illustration */}
-      <motion.img
-        initial={{ opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5, duration: 0.6 }}
-        src="/assets/Live collaboration-rafiki.svg"
-        alt="Hero Illustration"
-        className="hidden lg:block w-full max-w-xl mt-12 drop-shadow-2xl"
-      />
     </div>
   );
 }

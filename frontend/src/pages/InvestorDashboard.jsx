@@ -6,21 +6,28 @@ import { useProfileStore } from "../stores/profile.store";
 import { useRequestStore } from "../stores/request.store";
 
 export default function InvestorDashboard() {
-  const { getentrepreneurProfiles, entrepreneurProfiles } = useProfileStore();
-  const { createRequest, getSnetRequests, requests } = useRequestStore();
+  const { getentrepreneurProfiles, entrepreneurProfiles, loading:profileLoading } =
+    useProfileStore();
+  const { createRequest, getSnetRequests, requests, loading:reqLoading } =
+    useRequestStore();
 
   useEffect(() => {
     getentrepreneurProfiles();
     getSnetRequests();
   }, []);
 
-
-
   const getStatus = (entrepreneurProfileId) => {
     const found = requests.find((req) => req.to._id === entrepreneurProfileId);
     return found ? found.status : null;
   };
 
+
+  if (reqLoading || profileLoading)
+    return (
+      <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
+        Loading...
+      </h1>
+    );
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 pt-24 pb-12">
       <motion.h1

@@ -30,7 +30,6 @@ export const useProfileStore = create((set) => ({
     set({ loading: true });
     try {
       const res = await axiosInstance.get("/profile/");
-      console.log(res.data);
       set({ entrepreneurProfiles: res.data });
       localStorage.setItem("entrepreneurProfiles", JSON.stringify(res.data));
     } catch (error) {

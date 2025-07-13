@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useRequestStore } from "../stores/request.store";
 
 export default function EntrepreneurDashboard() {
-  const { ReceivedRequests, getReceivedReq, updateStatus } = useRequestStore();
+  const { ReceivedRequests, getReceivedReq, updateStatus, loading } =
+    useRequestStore();
 
   useEffect(() => {
     getReceivedReq();
@@ -14,7 +15,12 @@ export default function EntrepreneurDashboard() {
     await updateStatus(id, newStatus);
     await getReceivedReq();
   };
-
+  if (loading)
+    return (
+      <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
+        Loading...
+      </h1>
+    );
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 pt-24">
       <div className="max-w-6xl mx-auto">

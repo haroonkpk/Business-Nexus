@@ -16,12 +16,18 @@ import AboutPage from "./pages/AboutPage.jsx";
 import EditEntrepreneurProfile from "./components/EditEntrepreneurProfile.jsx";
 
 function App() {
-  const { checkingAuth} = useAuthStore();
+  const { checkingAuth, authUser, Loading, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
     checkingAuth();
   }, [checkingAuth]);
 
+  if (Loading || isCheckingAuth)
+    return (
+      <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
+        Loading...
+      </h1>
+    );
   return (
     <div className="min-h-screen bg-base-200 relative overflow-auto">
       <Navbar />
@@ -29,23 +35,29 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard/investor" element={<InvestorDashboard />} />
-        <Route path="/profile/investor/:id" element={<InvestorProfile />} />
+        <Route
+          path="/dashboard/investor"
+          element={authUser && authUser.role === "investor" ? <InvestorDashboard />: <Navigate to="/" />}
+        />
+        <Route
+          path="/profile/investor/:id"
+          element={authUser && <InvestorProfile />}
+        />
         <Route
           path="/profile/investor/edit"
-          element={<ProfileEditForInvestor />}
+          element={authUser && <ProfileEditForInvestor />}
         />
         <Route
           path="/dashboard/entrepreneur"
-          element={<EntrepreneurDashboard />}
+          element={authUser && authUser.role === "entrepreneur" ? <EntrepreneurDashboard  /> : <Navigate to="/" />}
         />
         <Route
           path="/profile/entrepreneur/:id"
-          element={<EntrepreneurProfile />}
+          element={authUser && <EntrepreneurProfile />}
         />
         <Route
           path="/profile/entrepreneur/edit"
-          element={<EditEntrepreneurProfile />}
+          element={authUser && <EditEntrepreneurProfile />}
         />
         <Route path="/logout" element={<Logout />} />
         <Route path="/about" element={<AboutPage />} />

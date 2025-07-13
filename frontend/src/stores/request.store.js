@@ -13,10 +13,11 @@ export const useRequestStore = create((set) => ({
     set({ loading: true });
     try {
       const res = await axiosInstance.get("/request/received");
-      console.log(res.data);
       set({ ReceivedRequests: res.data });
     } catch (error) {
       toast.error("faild req fetching");
+    }finally{
+      set({loading:false})
     }
   },
 
@@ -34,7 +35,6 @@ export const useRequestStore = create((set) => ({
 
   // ============== create request=================
   createRequest: async (toProfileId) => {
-    console.log(toProfileId);
 
     set({ loading: true });
     try {
@@ -51,13 +51,14 @@ export const useRequestStore = create((set) => ({
 
   updateStatus: async (id, updatedStatus) => {
     set({ loading: true });
-    console.log(id,updatedStatus);
     
     try {
       await axiosInstance.put(`/request/${id}`, {updatedStatus:updatedStatus});
       toast.success(`requst${updatedStatus}`);
     } catch (error) {
       toast.error("try Again");
+    }finally{
+      set({loading:false})
     }
   },
 }));

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useProfileStore } from "../stores/profile.store";
 import { motion } from "framer-motion";
+import { useAuthStore } from "../stores/auth.store";
 
 export default function EditEntrepreneurProfile() {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const { authUser } = useAuthStore();
   const { getProfile, updateProfile, profile } = useProfileStore();
 
   const [formData, setFormData] = useState({
@@ -16,7 +17,9 @@ export default function EditEntrepreneurProfile() {
   });
 
   useEffect(() => {
-    getProfile(id);
+    if (profile._id !== id && id !== undefined) {
+      getProfile(id);
+    }
   }, [id]);
 
   useEffect(() => {
@@ -75,7 +78,9 @@ export default function EditEntrepreneurProfile() {
           <Textarea
             label="startupDescription Summary"
             value={formData.startupDescription}
-            onChange={(e) => setFormData({ ...formData, startupDescription: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, startupDescription: e.target.value })
+            }
           />
 
           <motion.button
