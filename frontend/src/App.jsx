@@ -14,6 +14,7 @@ import ProfileEditForInvestor from "./components/ProfileEditForInvester.jsx";
 import Logout from "./pages/Logout.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import EditEntrepreneurProfile from "./components/EditEntrepreneurProfile.jsx";
+import ChatPage from "./pages/ChatPage.jsx";
 
 function App() {
   const { checkingAuth, authUser, Loading, isCheckingAuth } = useAuthStore();
@@ -37,7 +38,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route
           path="/dashboard/investor"
-          element={authUser && authUser.role === "investor" ? <InvestorDashboard />: <Navigate to="/" />}
+          element={
+            authUser && authUser.role === "investor" ? (
+              <InvestorDashboard />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         />
         <Route
           path="/profile/investor/:id"
@@ -49,7 +56,13 @@ function App() {
         />
         <Route
           path="/dashboard/entrepreneur"
-          element={authUser && authUser.role === "entrepreneur" ? <EntrepreneurDashboard  /> : <Navigate to="/" />}
+          element={
+            authUser && authUser.role === "entrepreneur" ? (
+              <EntrepreneurDashboard />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         />
         <Route
           path="/profile/entrepreneur/:id"
@@ -59,6 +72,7 @@ function App() {
           path="/profile/entrepreneur/edit"
           element={authUser && <EditEntrepreneurProfile />}
         />
+        <Route path="/chat/:userId" element={<ChatPage />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/about" element={<AboutPage />} />
         {/* Catch-all fallback */}
