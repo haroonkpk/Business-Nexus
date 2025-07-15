@@ -72,7 +72,7 @@ function App() {
           path="/profile/entrepreneur/edit"
           element={authUser && <EditEntrepreneurProfile />}
         />
-        <Route path="/chat/:userId" element={<ChatPage />} />
+        <Route path="/chat/:id" element={<ChatPage />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/about" element={<AboutPage />} />
         {/* Catch-all fallback */}

@@ -6,10 +6,17 @@ import { useProfileStore } from "../stores/profile.store";
 import { useRequestStore } from "../stores/request.store";
 
 export default function InvestorDashboard() {
-  const { getentrepreneurProfiles, entrepreneurProfiles, loading:profileLoading } =
-    useProfileStore();
-  const { createRequest, getSnetRequests, requests, loading:reqLoading } =
-    useRequestStore();
+  const {
+    getentrepreneurProfiles,
+    entrepreneurProfiles,
+    loading: profileLoading,
+  } = useProfileStore();
+  const {
+    createRequest,
+    getSnetRequests,
+    requests,
+    loading: reqLoading,
+  } = useRequestStore();
 
   useEffect(() => {
     getentrepreneurProfiles();
@@ -20,7 +27,6 @@ export default function InvestorDashboard() {
     const found = requests.find((req) => req.to._id === entrepreneurProfileId);
     return found ? found.status : null;
   };
-
 
   if (reqLoading || profileLoading)
     return (
@@ -40,7 +46,7 @@ export default function InvestorDashboard() {
       </motion.h1>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {entrepreneurProfiles.map((e, i) => {
+        {entrepreneurProfiles?.map((e, i) => {
           const status = getStatus(e._id);
           return (
             <motion.div
@@ -50,22 +56,22 @@ export default function InvestorDashboard() {
               transition={{ delay: 0.1 * i, duration: 0.4 }}
               className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5 shadow-md flex flex-col justify-between"
             >
-              <Link to={`/profile/entrepreneur/${e.user?._id}`} >
-              <div className="space-y-2">
-                <h2 className="text-xl font-bold text-white">
-                  {e.user?.username}
-                </h2>
-                <p className="text-pink-400 font-semibold">{e.startupName}</p>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {e.startupDescription}
-                </p>
-              </div>
+              <Link to={`/profile/entrepreneur/${e.user?._id}`}>
+                <div className="space-y-2">
+                  <h2 className="text-xl font-bold text-white">
+                    {e.user?.username}
+                  </h2>
+                  <p className="text-pink-400 font-semibold">{e.startupName}</p>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {e.startupDescription}
+                  </p>
+                </div>
               </Link>
 
               <div className="mt-4">
                 {status === "Accepted" ? (
                   <Link
-                    to={`/chat/${e.id}`}
+                    to={`/chat/${e._id}`}
                     className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 hover:opacity-90 transition"
                   >
                     Message <MessageSquareText size={16} />
