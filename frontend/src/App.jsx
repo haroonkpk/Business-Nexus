@@ -15,6 +15,7 @@ import Logout from "./pages/Logout.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import EditEntrepreneurProfile from "./components/EditEntrepreneurProfile.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
+import Loader from "./components/ui/Loader.jsx";
 
 function App() {
   const { checkingAuth, authUser, Loading, isCheckingAuth } = useAuthStore();
@@ -23,12 +24,7 @@ function App() {
     checkingAuth();
   }, [checkingAuth]);
 
-  if (Loading || isCheckingAuth)
-    return (
-      <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
-        Loading...
-      </h1>
-    );
+  if (Loading || isCheckingAuth) return <Loader />;
   return (
     <div className="min-h-screen bg-base-200 relative overflow-auto">
       <Navbar />

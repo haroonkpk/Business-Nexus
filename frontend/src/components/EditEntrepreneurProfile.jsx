@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { useProfileStore } from "../stores/profile.store";
 import { motion } from "framer-motion";
 import { useAuthStore } from "../stores/auth.store";
+import Loader from "./ui/Loader";
 
 export default function EditEntrepreneurProfile() {
   const { id } = useParams();
   const { authUser } = useAuthStore();
-  const { getProfile, updateProfile, profile } = useProfileStore();
+  const { getProfile, updateProfile, profile, loading } = useProfileStore();
 
   const [formData, setFormData] = useState({
     startupName: "",
@@ -37,6 +38,8 @@ export default function EditEntrepreneurProfile() {
     e.preventDefault();
     updateProfile(formData);
   }
+
+  if (loading) return <Loader />;
 
   return (
     <div className="min-h-screen bg-[#0f172a] flex items-center justify-center px-6 py-20 text-white">

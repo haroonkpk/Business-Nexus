@@ -4,9 +4,9 @@ import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
 const BASE_URL =
-  import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
+  import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
 
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create((set, get) => ({
   authUser: JSON.parse(localStorage.getItem("authUser")) || null,
   Entrepreneurs: null,
   isCheckingAuth: true,
@@ -24,7 +24,7 @@ export const useAuthStore = create((set) => ({
       set({ authUser: res.data });
       get().connectSocket();
     } catch (error) {
-      console.error("error in checkingauth fun", error);
+      console.error("user not logedin");
     } finally {
       set({ isCheckingAuth: false });
     }
@@ -69,8 +69,9 @@ export const useAuthStore = create((set) => ({
     set({ isLogining: true });
     try {
       const res = await axiosInstance.post("/auth/login", formData);
-      localStorage.setItem("authUser", JSON.stringify(res.data));
       set({ authUser: res.data });
+      localStorage.setItem("authUser", JSON.stringify(res.data));
+
       toast.success("Login successful!");
       get().connectSocket();
     } catch (error) {
@@ -96,6 +97,7 @@ export const useAuthStore = create((set) => ({
 
   // sockeio
   connectSocket: () => {
+    
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
     const socket = io(BASE_URL, {

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useProfileStore } from "../stores/profile.store";
 import { useRequestStore } from "../stores/request.store";
+import Loader from "../components/ui/Loader";
 
 export default function InvestorDashboard() {
   const {
@@ -28,12 +29,7 @@ export default function InvestorDashboard() {
     return found ? found.status : null;
   };
 
-  if (reqLoading || profileLoading)
-    return (
-      <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
-        Loading...
-      </h1>
-    );
+  if (reqLoading || profileLoading) return <Loader />;
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 pt-24 pb-12">
       <motion.h1

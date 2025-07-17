@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useRequestStore } from "../stores/request.store";
+import Loader from "../components/ui/Loader";
 
 export default function EntrepreneurDashboard() {
   const { ReceivedRequests, getReceivedReq, updateStatus, loading } =
@@ -15,12 +16,9 @@ export default function EntrepreneurDashboard() {
     await updateStatus(id, newStatus);
     await getReceivedReq();
   };
-  if (loading)
-    return (
-      <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
-        Loading...
-      </h1>
-    );
+  
+  if (loading) return <Loader />;
+
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 pt-24">
       <div className="max-w-6xl mx-auto">

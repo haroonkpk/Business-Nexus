@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { LoaderPinwheel } from "lucide-react";
 import { useProfileStore } from "../stores/profile.store";
+import Loader from "./ui/Loader";
 
 export default function ProfileEditForInvestor() {
   const { updateProfile, profile, loading } = useProfileStore();
@@ -24,12 +25,7 @@ export default function ProfileEditForInvestor() {
     updateProfile(formData);
   }
 
-  if (loading)
-    return (
-      <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
-        Loading...
-      </h1>
-    );
+  if (loading) return <Loader />;
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 pt-24">
       <div className="max-w-xl mx-auto bg-white/10 backdrop-blur border border-white/20 rounded-xl shadow-xl p-6 space-y-6">

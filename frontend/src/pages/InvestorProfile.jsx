@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useProfileStore } from "../stores/profile.store";
 import { useAuthStore } from "../stores/auth.store";
+import Loader from "../components/ui/Loader";
 
 export default function InvestorProfile() {
   const { id } = useParams();
@@ -14,12 +15,7 @@ export default function InvestorProfile() {
     getProfile(id);
   }, [id]);
 
-  if (!profile || loading)
-    return (
-      <h1 className=" w-full h-screen bg-[#0f172a] text-white text-center pt-20">
-        Loading...
-      </h1>
-    );
+  if (!profile || loading) return <Loader />;
 
   return (
     <div className="min-h-screen bg-[#0f172a] flex items-center justify-center px-6 py-21 md:py-16 text-white">
