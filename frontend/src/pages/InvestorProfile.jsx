@@ -71,7 +71,7 @@ export default function InvestorProfile() {
                   whileHover={{ scale: 1.015 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 250, damping: 20 }}
-                  className="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white font-medium shadow-[0_0_10px_#00000033] hover:bg-white/20 hover:shadow-[0_0_18px_#ffffff33] transition-all duration-300"
+                  className="w-full relative inline-flex items-center justify-center mt-1 gap-2 px-6 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white font-medium shadow-[0_0_10px_#00000033] hover:bg-white/20 hover:shadow-[0_0_18px_#ffffff33] transition-all duration-300"
                 >
                   Connect with Entrepreneurs
                   <ArrowRight

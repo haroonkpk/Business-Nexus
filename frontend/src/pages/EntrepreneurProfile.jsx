@@ -101,7 +101,7 @@ export default function EntrepreneurProfile() {
         <div className="mt-10 text-center">
           <Link
             to="/profile/entrepreneur/edit"
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 transition"
+            className="w-full inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 transition"
           >
             <Pencil className="w-4 h-4 text-pink-400" />
             Edit Profile

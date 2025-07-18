@@ -15,7 +15,7 @@ export default function HomePage() {
   }, []);
 
   const { ref, inView } = useInView({
-    triggerOnce: false, 
+    triggerOnce: false,
     rootMargin: "-100px",
   });
   return (
@@ -59,7 +59,13 @@ export default function HomePage() {
               </Link>
             </>
           ) : (
-            <Link to="/dashboard/investor">
+            <Link
+              to={
+                authUser?.role === "investor"
+                  ? "/dashboard/investor"
+                  : "/dashboard/entrepreneur"
+              }
+            >
               <Button className="px-8 py-3 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-semibold text-lg shadow-xl">
                 Go to Dashboard
               </Button>

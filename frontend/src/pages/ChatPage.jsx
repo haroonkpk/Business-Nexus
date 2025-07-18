@@ -55,7 +55,7 @@ export default function ChatPage() {
           <div className="flex items-center gap-3">
             <div className="relative">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm uppercase">
-                {profile?.user?.username?.charAt(0)}
+                {selectedUser?.user?.username?.charAt(0)}
               </div>
               <span
                 className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border border-white ${
@@ -76,8 +76,6 @@ export default function ChatPage() {
               </p>
             </div>
           </div>
-
-        
         </div>
 
         {/* Messages */}
