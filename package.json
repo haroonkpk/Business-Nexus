@@ -1,0 +1,22 @@
+{
+  "name": "business-nexus---full-stack-development-intern-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haroonkpk/Business-Nexus.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/haroonkpk/Business-Nexus/issues"
+  },
+  "homepage": "https://github.com/haroonkpk/Business-Nexus#readme"
+}
