@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+import { useProfileStore } from "./profile.store.js";
 
 const BASE_URL =
   import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
@@ -97,12 +98,11 @@ export const useAuthStore = create((set, get) => ({
 
   // sockeio
   connectSocket: () => {
-    
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
     const socket = io(BASE_URL, {
       query: {
-        userId: authUser.userId,
+        userId: useProfileStore.getState().profile?._id,
       },
     });
     socket.connect();

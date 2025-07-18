@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useProfileStore } from "../stores/profile.store";
 import { useRequestStore } from "../stores/request.store";
 import Loader from "../components/ui/Loader";
+import { useMessageStore } from "../stores/message.store";
 
 export default function InvestorDashboard() {
   const {
@@ -12,6 +13,7 @@ export default function InvestorDashboard() {
     entrepreneurProfiles,
     loading: profileLoading,
   } = useProfileStore();
+  const { setSelectedUser } = useMessageStore();
   const {
     createRequest,
     getSnetRequests,
@@ -67,6 +69,7 @@ export default function InvestorDashboard() {
               <div className="mt-4">
                 {status === "Accepted" ? (
                   <Link
+                    onClick={() => setSelectedUser(e)}
                     to={`/chat/${e._id}`}
                     className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 hover:opacity-90 transition"
                   >

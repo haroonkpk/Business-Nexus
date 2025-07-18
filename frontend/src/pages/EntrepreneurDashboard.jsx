@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useRequestStore } from "../stores/request.store";
 import Loader from "../components/ui/Loader";
+import { useMessageStore } from "../stores/message.store";
 
 export default function EntrepreneurDashboard() {
   const { ReceivedRequests, getReceivedReq, updateStatus, loading } =
     useRequestStore();
+  const { setSelectedUser } = useMessageStore();
 
   useEffect(() => {
     getReceivedReq();
@@ -16,7 +18,7 @@ export default function EntrepreneurDashboard() {
     await updateStatus(id, newStatus);
     await getReceivedReq();
   };
-  
+
   if (loading) return <Loader />;
 
   return (
@@ -60,6 +62,7 @@ export default function EntrepreneurDashboard() {
 
                 {req.status === "Accepted" && (
                   <Link
+                    onClick={() => setSelectedUser(req.from)}
                     to={`/chat/${req.from?._id}`}
                     className="text-sm text-pink-400 hover:underline"
                   >

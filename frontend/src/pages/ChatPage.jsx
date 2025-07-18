@@ -4,17 +4,33 @@ import { useMessageStore } from "../stores/message.store";
 import { useProfileStore } from "../stores/profile.store";
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
+import { useAuthStore } from "../stores/auth.store";
 
 export default function ChatPage() {
   const { id } = useParams();
   const { profile } = useProfileStore();
-  const { messages, getMessages, sendMessage,loading } = useMessageStore();
+  const { onlineUsers } = useAuthStore();
+  const {
+    messages,
+    getMessages,
+    sendMessage,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+    selectedUser,
+  } = useMessageStore();
   const [input, setInput] = useState("");
   const bottomRef = useRef(null);
+  const isOnline = onlineUsers.includes(id);
+  
 
   useEffect(() => {
     getMessages(id);
   }, [id]);
+
+  useEffect(() => {
+    subscribeToMessages();
+    return () => unsubscribeFromMessages();
+  }, [unsubscribeFromMessages, subscribeToMessages, getMessages]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -35,8 +51,33 @@ export default function ChatPage() {
         className="w-full max-w-4xl bg-white/5 mt-10 border border-white/20 rounded-3xl shadow-2xl flex flex-col h-[80vh]"
       >
         {/* Chat Header */}
-        <div className="p-5 border-b border-white/10 text-center font-bold text-2xl bg-gradient-to-r from-indigo-400 to-pink-500 bg-clip-text text-transparent">
-          Conversation Lounge
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5 rounded-t-3xl">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm uppercase">
+                {profile?.user?.username?.charAt(0)}
+              </div>
+              <span
+                className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border border-white ${
+                  isOnline ? "bg-green-400" : "bg-gray-400"
+                }`}
+              ></span>
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-white">
+                {selectedUser?.user?.username || "Loading..."}
+              </h2>
+              <p
+                className={`text-sm ${
+                  isOnline ? "text-green-400" : "text-gray-400"
+                }`}
+              >
+                {isOnline ? "Online" : "Offline"}
+              </p>
+            </div>
+          </div>
+
+        
         </div>
 
         {/* Messages */}
