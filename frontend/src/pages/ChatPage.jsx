@@ -95,14 +95,13 @@ export default function ChatPage() {
           <div ref={bottomRef} />
         </div>
 
-        {/* Input Field */}
-        <div className="p-5 border-t border-white/10 bg-white/5 backdrop-blur-xl rounded-b-3xl">
-          <div className="flex items-center gap-3">
+        <div className="p-5 border-t border-white/10 bg-white/5 backdrop-blur-xl rounded-b-3xl w-full max-w-screen-sm mx-auto">
+          <div className="flex items-center gap-3 w-full">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your magical thoughts..."
-              className="flex-1 bg-white/10 border border-white/20 text-white px-5 py-3 rounded-xl placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="flex-1 w-full bg-white/10 border border-white/20 text-white px-5 py-3 rounded-xl placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <button
               onClick={handleSend}
